@@ -9,12 +9,12 @@ attendence=$((RANDOM%2))
 if [ $attendence -eq 1 ]
 then
 	echo "Employee present"
-	if [ $((RANDOM%2)) -eq 1 ]
-	then
-		dailyWage=$((WAGE_PER_HOUR*FULL_DAY_HOUR))
-	else
-		dailyWage=$((WAGE_PER_HOUR*PART_TIME_HOUR))
-	fi
+	case $((RANDOM%2)) in
+		0)
+		dailyWage=$((WAGE_PER_HOUR*FULL_DAY_HOUR));;
+		1)
+		dailyWage=$((WAGE_PER_HOUR*PART_TIME_HOUR));;
+	esac
 else
 	echo "Employee absent"
 	dailyWage=0;
