@@ -1,4 +1,4 @@
-#! /bin/bash -x 
+#! /bin/bash  
 
 echo "Welcome to Employee wage";
 WAGE_PER_HOUR=20;
@@ -8,6 +8,7 @@ WORKING_DAY_PER_MONTH=20;
 actual_working_day=0;
 month_Hrs=0;
 WORKING_HOUR_PER_MONTH=100;
+declare -A days
 
 function getWorkingHrs()
 {		monthHrs=$1;
@@ -32,12 +33,12 @@ do
 			res="$( getWorkingHrs $temp )";
 			((month_Hrs+=$res));
 			dailyWage=$(($res*$WAGE_PER_HOUR))
-			arr[$actual_working_day]=$dailyWage;
+			#arr[$actual_working_day]=$dailyWage;
 			total_Wage=$((month_Hrs*$WAGE_PER_HOUR));
+			echo day"$actual_working_day""${days[day"$actual_working_day"]}=$dailyWage";
 	else
 			((dailyWage+=0));
 	fi
 done
 	echo "Employee Working hrs: "$month_Hrs;
-	echo "Daily_Wage:"${arr[@]}
-	echo "Employee total Wage is: "$total_Wage
+	echo "Employee total Wage is: "$total_Wage;
