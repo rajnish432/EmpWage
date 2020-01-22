@@ -13,10 +13,10 @@ function getWorkingHrs()
 {		monthHrs=$1;
 		case $((RANDOM%2)) in
             0)
-               ((monthHrs+=8))
+               monthHrs=$FULL_DAY_HOUR
 	              ;;
             1)
-               ((monthHrs+=4))
+               monthHrs=$PART_TIME_HOUR
    	           ;;
 		esac
 	echo "$monthHrs"
@@ -30,11 +30,14 @@ do
 			((actual_working_day++))
 			temp=$month_Hrs;
 			res="$( getWorkingHrs $temp )";
-			month_Hrs=$res;
-			dailyWage=$((res*$WAGE_PER_HOUR));
+			((month_Hrs+=$res));
+			dailyWage=$(($res*$WAGE_PER_HOUR))
+			arr[$actual_working_day]=$dailyWage;
+			total_Wage=$((month_Hrs*$WAGE_PER_HOUR));
 	else
 			((dailyWage+=0));
 	fi
 done
-	echo "Employee wage: "$dailyWage
-	echo "Employee Working hrs: "$res
+	echo "Employee Working hrs: "$month_Hrs;
+	echo "Daily_Wage:"${arr[@]}
+	echo "Employee total Wage is: "$total_Wage
